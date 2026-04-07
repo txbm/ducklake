@@ -10,6 +10,7 @@
 #include "storage/ducklake_catalog.hpp"
 #include "storage/ducklake_transaction.hpp"
 #include "storage/ducklake_schema_entry.hpp"
+#include "common/ducklake_util.hpp"
 
 namespace duckdb {
 
@@ -113,7 +114,7 @@ void DuckLakeInitializer::InitializeDataPath() {
 	CheckAndAutoloadedRequiredExtension(data_path);
 
 	auto &fs = FileSystem::GetFileSystem(context);
-	auto separator = fs.PathSeparator(data_path);
+	auto separator = DuckLakeUtil::LocalOrRemoteSeparator(fs, data_path);
 	// pop trailing path separators
 	while (!data_path.empty() && (data_path.back() == '/' || data_path.back() == '\\')) {
 		data_path.pop_back();
