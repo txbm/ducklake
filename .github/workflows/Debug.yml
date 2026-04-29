@@ -63,6 +63,8 @@ jobs:
         GEN: ninja
         CMAKE_BUILD_PARALLEL_LEVEL: 2
       run: |
+        export OVERRIDE_GIT_DESCRIBE="v1.5.2"
+        export DUCKDB_EXPLICIT_VERSION="$(cat .github/duckdb-version)"
         make debug
 
     - name: Test extension
